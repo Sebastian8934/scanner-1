@@ -32,7 +32,7 @@ function App() {
       // console.log(decodedResult);
         /* handle success */
     };
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    const config = { fps: 10, qrbox: { width: 250, height: 50 } };
 
     // If you want to prefer back camera
     html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
