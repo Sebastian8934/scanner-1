@@ -32,27 +32,15 @@ function App() {
       // console.log(decodedResult);
         /* handle success */
     };
-    const config = { fps: 10, qrbox: { width: 350, height: 250 } };
+    const config = { fps: 15, qrbox: { width: 350, height: 100 } };
 
     // If you want to prefer back camera
     html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
   }, [])
   
-  const stopCamera = () => {
-    const html5QrCode = new Html5Qrcode("reader");
-    html5QrCode.stop().then((ignore) => {
-      // QR Code scanning is stopped.
-    }).catch((err) => {
-      // Stop failed, handle it.
-    });
-  }
-
   return (
     <>
       <div id="reader" width="600px"></div>
-      <div>
-        <button onClick={stopCamera}>detener camara</button>
-      </div>
       <div>
         {result}
       </div>
