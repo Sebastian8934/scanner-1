@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Html5QrcodeScanner, Html5Qrcode } from 'html5-qrcode';
 
 function App() {
+
+  const [result, setResult] = useState();
 
   // useEffect(() => {
   //   function onScanSuccess(decodedText, decodedResult) {
@@ -25,14 +27,16 @@ function App() {
   useEffect(() => {
     const html5QrCode = new Html5Qrcode("reader");
     const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+      setResult(decodedText)
+      // console.log(decodedText);
+      // console.log(decodedResult);
         /* handle success */
     };
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
     // If you want to prefer back camera
     html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
-
-      }, [])
+  }, [])
   
   const stopCamera = () => {
     const html5QrCode = new Html5Qrcode("reader");
@@ -48,6 +52,9 @@ function App() {
       <div id="reader" width="600px"></div>
       <div>
         <button onClick={stopCamera}>detener camara</button>
+      </div>
+      <div>
+        {result}
       </div>
     </>
   );
