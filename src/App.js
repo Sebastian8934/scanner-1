@@ -1,25 +1,30 @@
-import React, { useState } from 'react';
-import { QrReader } from 'react-qr-reader';
+import React, { useEffect } from 'react';
+import { Html5QrcodeScanner } from 'html5-qrcode';
 
 function App() {
 
-  const [data, setData] = useState('No result');
+  useEffect(() => {
+    function onScanSuccess(decodedText, decodedResult) {
+      // handle the scanned code as you like, for example:
+      console.log(`Code matched = ${decodedText}`, decodedResult);
+    }
+    
+    function onScanFailure(error) {
+      // handle scan failure, usually better to ignore and keep scanning.
+      // for example:
+      console.warn(`Code scan error = ${error}`);
+    }
+    
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+      "reader",
+      { fps: 10, qrbox: {width: 250, height: 250} },
+      /* verbose= */ false);
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+  });
 
   return (
     <>
-      <QrReader
-        onResult={(result, error) => {
-          if (!!result) {
-            setData(result?.text);
-          }
-
-          if (!!error) {
-            console.info(error);
-          }
-        }}
-        style={{ width: '100%' }}
-      />
-      <p>{data}</p>
+      <div id="reader" width="600px"></div>
     </>
   );
 }
